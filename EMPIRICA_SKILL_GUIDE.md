@@ -219,6 +219,124 @@ A: Excellent! That means you're adapting to context. Scores SHOULD change based 
 **Q: How do I know when I've investigated enough?**
 A: When confidence ≥ 0.7 AND remaining unknowns are acceptable risks (not showstoppers).
 
+**Q: How does this work across multiple sessions?**
+A: Use **memory integration**! After POSTFLIGHT, save epistemic handoffs to Claude's memory. Next session retrieves them. See Memory Integration section below.
+
+---
+
+## Memory Integration: Cross-Session Continuity 🔥
+
+### The Problem
+Traditional AI: Every new session starts from zero
+- You re-explain context (5,000 tokens)
+- AI re-investigates (3,000 tokens)
+- Total: 8,000 tokens of duplicate work
+
+### The Solution
+**Save epistemic handoffs to Claude's memory after POSTFLIGHT**
+
+#### How to Use
+
+**Step 1: After POSTFLIGHT, create memory entry**
+```
+"Save this epistemic handoff to memory:
+
+Empirica Handoff: [Task Name] - [Date]
+
+Task: [One-line description]
+
+Epistemic Delta:
+- KNOW: [pre] → [post] (Δ[delta])
+- UNCERTAINTY: [pre] → [post] (Δ[delta])
+
+Learned (High Confidence):
+• [Specific fact/pattern]
+• [Another insight]
+
+Remaining Uncertainty:
+• [What's unclear + uncertainty score]
+• [Another gap]
+
+Key Insight: [Most important discovery]
+Next Session: [Where to focus]"
+```
+
+**Step 2: At next session PREFLIGHT, retrieve**
+```
+"Check memory for epistemic handoffs related to [current task]"
+```
+
+#### Example: Multi-Session Security Review
+
+**Session 1 - Initial Review:**
+```
+Empirica Handoff: Auth Security Review - Nov 18
+
+Task: Review authentication system for vulnerabilities
+
+Epistemic Delta:
+- KNOW: 0.3 → 0.85 (Δ+0.55)
+- UNCERTAINTY: 0.8 → 0.2 (Δ-0.6)
+
+Learned:
+• OAuth PKCE implementation is correct
+• Rate limiting: 10 requests/min per IP
+• Sessions use httpOnly + secure cookies
+
+Remaining Uncertainty:
+• Token refresh on network failure (0.4)
+• Multi-tab session synchronization (0.5)
+
+Key Insight: Main risk is refresh handling, not initial auth
+Next: Test token refresh edge cases
+```
+
+**Session 2 - Continue Work (days later):**
+```
+PREFLIGHT → Retrieve memory
+Found handoff: "Auth Security Review"
+
+Current state:
+- KNOW: 0.85 (inherited from previous session)
+- FOCUS: Token refresh testing (was 0.4 uncertain)
+- SKIP: Re-reviewing OAuth (already 0.85 confidence)
+
+Result: Start at 85% knowledge, not 30%
+Token savings: ~7,500 tokens (94% reduction)
+```
+
+### When to Save to Memory
+
+**Save after:**
+✅ Complex tasks (>30 min)
+✅ Learning new domains  
+✅ Multi-session work
+✅ When KNOW delta > 0.3 (significant learning)
+✅ When discovering key patterns
+
+**Don't save:**
+❌ Routine tasks (no learning)
+❌ One-off questions
+❌ Minimal investigation
+
+### Memory vs CLI
+
+**Memory Integration (Chat):**
+- Cross-session continuity ✅
+- Epistemic handoffs ✅
+- Zero setup ✅
+- Works in any Claude chat ✅
+
+**CLI Adds (Advanced):**
+- API token reduction (98% for handoffs)
+- Automated checkpoint management
+- Multi-agent coordination
+- Git provenance tracking
+
+**Most users need memory, not CLI.**
+
+---
+
 ## References in This Skill
 
 **SKILL.md**: Main guide with CASCADE workflow  

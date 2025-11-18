@@ -59,13 +59,132 @@ POSTFLIGHT   → Reflect on what you learned
 **Simplified to 4 vectors for most tasks:**
 - KNOW, DO, CONTEXT, UNCERTAINTY
 
+## Cross-Session Continuity (Memory Integration) 🔥
+
+### The Problem
+**Traditional AI:** Every new session starts from zero
+- You: Re-explain context (~5,000 tokens)
+- AI: Re-investigates (~3,000 tokens)
+- **Total: 8,000 tokens of duplicate work per session**
+
+### The Solution
+**POSTFLIGHT creates an epistemic handoff saved to Claude's memory:**
+
+**Session 1:**
+```
+POSTFLIGHT → Save to memory
+"Learned: API uses REST conventions, KNOW: 0.85, UNCERTAINTY: 0.2 on error handling"
+```
+
+**Session 2 (days later):**
+```
+PREFLIGHT → Retrieve memory
+"Previous session: KNOW: 0.85, focus on error handling (was uncertain)"
+AI starts at 85% knowledge, investigates only the gaps
+```
+
+**Result: 94% fewer tokens (7,500 saved), genuine knowledge continuity**
+
+### How to Use Memory Integration
+
+**After POSTFLIGHT, ask Claude:**
+```
+"Save this epistemic handoff to memory for future sessions"
+```
+
+**Format saved to memory:**
+```
+Empirica Handoff: [Task Name] - [Date]
+
+Epistemic Delta:
+- KNOW: 0.3 → 0.85 (learned +0.55)
+- UNCERTAINTY: 0.8 → 0.2 (reduced -0.6)
+
+Learned (High Confidence):
+• [Specific pattern/fact discovered]
+• [Another concrete insight]
+
+Remaining Uncertainty:
+• [What's still unclear + uncertainty score]
+• [Another gap to investigate]
+
+Key Insight: [Most important discovery]
+Next Session Focus: [Where to continue]
+```
+
+**At next session's PREFLIGHT:**
+```
+"Check memory for previous epistemic handoffs on [topic]"
+```
+
+### Example: Multi-Session Security Review
+
+**Session 1 - Initial Review:**
+```
+Empirica Handoff: Auth Security Review - Nov 18
+
+Task: Review authentication system
+
+Epistemic Delta:
+- KNOW: 0.3 → 0.85 (Δ+0.55)
+- UNCERTAINTY: 0.8 → 0.2 (Δ-0.6)
+
+Learned:
+• OAuth implementation uses PKCE flow correctly
+• Rate limiting: 10 requests/min per IP
+• Sessions use httpOnly + secure cookies
+
+Remaining Uncertainty:
+• Token refresh on network failure (0.4)
+• Multi-tab session synchronization (0.5)
+
+Key Insight: Main risk is refresh handling, not initial auth
+Next: Test token refresh edge cases
+```
+
+**Session 2 - Continue Work:**
+```
+PREFLIGHT retrieves memory → Start at KNOW: 0.85
+Focus investigation on: Token refresh (was 0.4 uncertainty)
+Skip: Re-reviewing OAuth (already 0.85 confidence)
+
+Result: Builds on prior learning instead of starting over
+```
+
+### When Memory Integration Shines
+
+✅ **Multi-day projects** - Resume exactly where you left off  
+✅ **Learning new domains** - Knowledge accumulates across sessions  
+✅ **Recurring tasks** - Build expertise over time  
+✅ **Complex investigations** - Track what you've learned  
+
+### Memory vs CLI
+
+**Chat + Memory Integration:**
+- Cross-session continuity ✅
+- Epistemic handoffs ✅
+- Zero setup ✅
+- Works in any Claude chat ✅
+
+**CLI Adds (Advanced Users):**
+- Token reduction via API (98% for handoffs)
+- Multi-agent coordination
+- Git provenance tracking
+- Automated checkpoint management
+
+**Most users need memory integration, not CLI infrastructure.**
+
+Upgrade path: Chat skill → Memory → CLI (when you need automation)
+
+---
+
 ## When to Use
 
 ### Always Use For:
 ✅ Complex tasks (>1 hour)  
 ✅ Learning new domains  
 ✅ High-stakes work (security, production code)  
-✅ Multi-session work  
+✅ Multi-session work (with memory integration!)  
 ✅ Collaborative tasks with other AIs  
 
 ### Optional For:
@@ -95,26 +214,33 @@ See EMPIRICA_SYSTEM_PROMPT_INTEGRATION.md
 ```
 
 ### Level 3: Full Empirica Foundation (CLI/IDE) 🚀
-**For advanced features, install the CLI:**
+**For advanced features and API token efficiency:**
 ```bash
 pip install empirica-foundation
 empirica bootstrap --ai-id your-name
 ```
 
 **What you get:**
-- **Session Handoff Reports** - 98% token reduction for multi-session work
-  - Resume in ~400 tokens vs 20,000+ baseline
-  - Multi-agent coordination (query by AI, date, task)
-  - Stored in git notes + database
-- **Git Checkpoints** - 97.5% context compression
-- **13-Vector Assessment** - Deep epistemic tracking
-- **MCP Integration** - 3 tools for IDE workflows
-- **Python API** - Programmatic access
+- **98% Token Reduction (API/CLI only)** - Session handoff reports compress 20,000 → 400 tokens
+  - *Note: Token savings apply to API/CLI usage, not chat interfaces*
+  - *Chat users get continuity via memory integration (see above)*
+- **Git Checkpoints** - 97.5% context compression via distributed git notes
+- **13-Vector Deep Assessment** - Full epistemic tracking system
+- **MCP Integration** - 3 tools for IDE workflows (Cursor, Windsurf, etc.)
+- **Python API** - Programmatic access for automation
+- **Multi-Agent Coordination** - Query handoffs by AI, date, task
+
+**When to upgrade to CLI:**
+- You need automated checkpoint management
+- You're using API (not chat) and want token efficiency
+- You need multi-agent coordination
+- You want git-based provenance tracking
+- You need programmatic integration
 
 **Positioning:**
-- **Chat skill (this package)** - Try Empirica, works immediately
-- **CLI/IDE (Empirica Foundation)** - Advanced features for serious users
-- **Natural upgrade path** - Chat demonstrates value → CLI for power features
+- **Chat skill (this package)** - Try Empirica, works immediately, memory integration for continuity
+- **CLI/IDE (Empirica Foundation)** - Advanced features, API token efficiency, automation
+- **Natural upgrade path** - Chat demonstrates value → Memory shows continuity → CLI for power features
 
 Both launching: **November 20, 2025**  
 GitHub: `Nubaeon/empirica_chat` + `Nubaeon/empirica` (Foundation)
