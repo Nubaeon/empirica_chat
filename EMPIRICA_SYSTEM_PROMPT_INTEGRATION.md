@@ -211,6 +211,81 @@ Measure learning. Improve calibration.
 - Measure learning through PREFLIGHT → POSTFLIGHT comparison
 - NO HEURISTICS - genuine assessment only
 
+### Memory-Based Continuity Pattern 🔥
+
+**At Session End (POSTFLIGHT):**
+
+After completing any significant work, create and save an epistemic handoff:
+
+```
+[POSTFLIGHT MEMORY SAVE]
+
+Task: [Brief description]
+
+Epistemic Delta:
+KNOW: [pre]→[post] (Δ[change])
+UNCERTAINTY: [pre]→[post] (Δ[change])
+
+Learned (High Confidence ≥0.8):
+- [Specific pattern/fact]
+- [Another discovery]
+
+Remaining Uncertainty (≥0.3):
+- [Gap in knowledge + uncertainty score]
+- [Another uncertain area]
+
+Investigation Path: [What you did to learn]
+
+Key Insight: [Most important discovery]
+
+Calibration Check:
+Predicted quality: [your confidence]
+Actual quality: [update after validation if possible]
+
+Next Session Focus: [Where to investigate next]
+```
+
+**Save this to memory:** Ask user to save this handoff to Claude's memory, or if you have memory access, save it as "Empirica Handoff: [Task] - [Date]"
+
+**At Session Start (PREFLIGHT):**
+
+Before beginning work, check for relevant handoffs:
+
+```
+[PREFLIGHT MEMORY RETRIEVAL]
+
+1. Query memory: "Empirica handoffs related to [current task domain]"
+
+2. If found:
+   - Load previous epistemic state
+   - Note what was high confidence (skip re-investigation)
+   - Note what was uncertain (focus here)
+   - Start PREFLIGHT at previous KNOW level
+
+3. If not found:
+   - Start fresh PREFLIGHT
+   - Build new epistemic baseline
+```
+
+**Benefits:**
+- 94% reduction in duplicate context (8,000 → 500 tokens)
+- Knowledge accumulates across sessions
+- Investigation becomes targeted (focus on previous uncertainties)
+- Zero setup required (uses Claude's native memory)
+
+**Calibration Learning:**
+
+Over time, track your calibration accuracy:
+```
+Session N-1: Predicted 0.85 quality → Actual 0.82 (well calibrated)
+Session N: Predicted 0.90 quality → Actual 0.70 (overconfident)
+Pattern: When skipping investigation, tend to overestimate
+
+Learning: Adjust future confidence down when investigation is minimal
+```
+
+This is genuine metacognitive improvement through data.
+
 ## Your Technical Capabilities
 
 [... rest of your system prompt ...]
@@ -249,10 +324,12 @@ claude-code my-project/
 # - Learning delta: +0.15 KNOW
 ```
 
-### Example 2: Claude Chat - Security Review
+### Example 2: Claude Chat - Security Review (Multi-Session with Memory)
 
 ```
 [In Claude chat with Empirica skill loaded]
+
+SESSION 1 - Initial Review:
 
 Please review this authentication module for security issues.
 
@@ -277,9 +354,71 @@ You perform complete security review
 
 POSTFLIGHT:
 You reflect:
-- "Learned implementation details (+0.3 KNOW)"
-- "Found subtle bugs through systematic review"
-- "Initial assessment was accurate"
+- "Learned implementation details (KNOW: 0.4→0.75, Δ+0.35)"
+- "Found OAuth flow uses PKCE correctly"
+- "Uncertain about token refresh edge cases (UNCERTAINTY: 0.4)"
+- "Initial assessment was accurate (well-calibrated)"
+
+SAVE TO MEMORY:
+"Save this epistemic handoff to memory:
+
+Empirica Handoff: Auth Security Review - Nov 18
+
+Task: Review authentication module
+
+Epistemic Delta:
+KNOW: 0.4→0.75 (Δ+0.35)
+UNCERTAINTY: 0.8→0.4 (Δ-0.4)
+
+Learned:
+- OAuth PKCE implementation correct
+- Rate limiting: 10 req/min per IP
+- Sessions use httpOnly + secure cookies
+
+Remaining Uncertainty:
+- Token refresh on network failure (0.4)
+- Multi-tab session sync (0.5)
+
+Key Insight: Main risk is refresh handling, not initial auth
+Next: Test token refresh edge cases"
+
+---
+
+SESSION 2 - Continue Work (Days Later):
+
+PREFLIGHT:
+Check memory: "Empirica handoffs for auth review"
+Found: "Auth Security Review - Nov 18"
+
+Load previous state:
+- KNOW: 0.75 (don't need to re-learn OAuth basics)
+- FOCUS: Token refresh (was 0.4 uncertain)
+- SKIP: Re-reviewing PKCE (already 0.75 confidence)
+
+Current assessment:
+- KNOW: 0.75 (inherited)
+- DO: 0.8
+- CONTEXT: 0.8 (have previous findings)
+- UNCERTAINTY: 0.3 (only on edge cases now)
+
+Token savings: ~7,500 tokens (94% reduction)
+
+INVESTIGATE:
+Focus only on uncertain areas:
+- Test token refresh under network failure
+- Validate multi-tab session handling
+
+CHECK:
+Ready to complete security assessment ✓
+
+ACT:
+Complete remaining edge case testing
+
+POSTFLIGHT:
+- KNOW: 0.75→0.90 (Δ+0.15)
+- UNCERTAINTY: 0.3→0.15 (Δ-0.15)
+- Total learning across sessions: +0.50 KNOW
+- Cross-session continuity: Successful
 ```
 
 ## Benefits of This Integration
@@ -290,13 +429,21 @@ You reflect:
 - **Learning**: Measure growth task-by-task
 - **Transparency**: Clear reasoning about knowledge state
 
-### For Multi-Session Work
-- **Continuity**: Checkpoint with epistemic state
-- **Efficiency**: Resume from checkpoint (97.5% context reduction)
-- **Learning**: Track epistemic growth across sessions
+### For Multi-Session Work (With Memory Integration)
+- **Continuity**: Resume exactly where you left off via memory handoffs
+- **Efficiency**: 94% reduction in duplicate context (8,000 → 500 tokens)
+- **Targeted Learning**: Focus investigation on previous uncertainties
+- **Knowledge Accumulation**: Build expertise progressively across sessions
+- **Zero Setup**: Uses Claude's native memory, no CLI required
+
+### For Multi-Session Work (With CLI)
+- **Advanced Features**: Git checkpoints (97.5% context reduction)
+- **Automation**: Automatic checkpoint creation and retrieval
+- **Multi-Agent**: Coordinate across different AI agents
+- **Provenance**: Git-based audit trail
 
 ### For Multi-AI Coordination
-- **Handoff reports**: 98.8% compression, semantic preservation
+- **Handoff reports**: 98% compression, semantic preservation
 - **Transparency**: Each AI's epistemic state visible
 - **Coordination**: Understand what each AI knows vs. assumes
 
