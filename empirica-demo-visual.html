@@ -258,7 +258,7 @@
 <body>
     <div class="container">
         <h1>⚡ Empirica CASCADE Demo</h1>
-        <p class="subtitle">Real workflow example: Security code review</p>
+        <p class="subtitle">Real workflow example: Security code review + Cross-session continuity</p>
         
         <div class="phases">
             <div class="phase">
@@ -439,6 +439,35 @@
             <h3>💡 The Key Insight</h3>
             <p>Without Empirica: "I reviewed the code and found 2 issues"</p>
             <p style="margin-top: 10px;">With Empirica: "I was 40% confident initially. Investigated systematically. Became 85% confident. Learned +45% about the domain. Initial assessment was accurate. Here's exactly what I discovered."</p>
+        </div>
+        
+        <div class="key-insight" style="margin-top: 40px;">
+            <h3>🔥 Memory Integration: Cross-Session Continuity</h3>
+            <p style="margin-bottom: 15px;"><strong>The Problem:</strong> Every new chat starts from zero. You re-explain context (5,000 tokens). AI re-investigates (3,000 tokens). Total: 8,000 tokens wasted.</p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin-bottom: 10px;"><strong>Session 1 (Today):</strong></p>
+                <p style="color: #666;">POSTFLIGHT → Save epistemic handoff to Claude memory:</p>
+                <p style="color: #667eea; margin: 10px 0; font-style: italic;">"Learned: API uses REST, KNOW: 0.85, UNCERTAINTY: 0.2 on error handling"</p>
+                
+                <p style="margin: 20px 0 10px 0;"><strong>Session 2 (Tomorrow):</strong></p>
+                <p style="color: #666;">PREFLIGHT → Retrieve memory:</p>
+                <p style="color: #667eea; margin: 10px 0; font-style: italic;">"Previous work: KNOW 0.85, focus on error handling (was uncertain)"</p>
+                
+                <p style="margin-top: 15px; color: #51cf66; font-weight: bold;">✅ Result: Start at 85% knowledge, not 30%. Save 7,500 tokens (94%).</p>
+            </div>
+            
+            <p style="margin-top: 15px;"><strong>How it works:</strong></p>
+            <ul style="margin-left: 20px; color: #666; line-height: 1.8;">
+                <li>After POSTFLIGHT: "Save this epistemic handoff to memory"</li>
+                <li>At next PREFLIGHT: "Check memory for previous work on [topic]"</li>
+                <li>Knowledge accumulates across sessions</li>
+                <li>Zero setup - uses Claude's native memory</li>
+            </ul>
+            
+            <p style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px; color: #856404;">
+                <strong>💡 Most users never need the CLI</strong> - Memory integration provides continuity without infrastructure. CLI is for automation/API efficiency (optional upgrade).
+            </p>
         </div>
         
         <div class="principles">
