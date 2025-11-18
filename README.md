@@ -25,17 +25,76 @@ This package contains everything you need to integrate Empirica epistemic self-a
 
 ## Quick Start
 
-### Option A: Use in Claude Chat (Easiest)
-1. Open a new Claude conversation
-2. Upload `empirica-epistemic-framework.skill` 
-3. Claude automatically loads the skill
-4. Start using CASCADE workflow: PREFLIGHT → INVESTIGATE → CHECK → ACT → POSTFLIGHT
+### Option 1: Use in Claude Chat (Recommended - Zero Setup) ✨
 
-### Option B: Integrate with System Prompt (Advanced)
-1. Add Empirica section to your CLAUDE.md universal system prompt
-2. See `EMPIRICA_SYSTEM_PROMPT_INTEGRATION.md` for template
-3. Every Claude instance now has epistemic framework built-in
-4. Use across multiple conversations and sessions
+**Step 1: Download the skill file**
+- Download `empirica-epistemic-framework.skill` from this repository
+
+**Step 2: Load into Claude**
+- Open a new Claude chat at [claude.ai](https://claude.ai)
+- Click the attachment button (paperclip icon)
+- Upload `empirica-epistemic-framework.skill`
+- Claude will automatically recognize and load the skill
+
+**Step 3: Start using CASCADE**
+```
+You: "Let's use Empirica for this task. Start with PREFLIGHT."
+
+Claude: "I'll assess my epistemic state:
+KNOW: 0.4 (understand the domain basics)
+DO: 0.7 (can execute similar tasks)
+CONTEXT: 0.3 (missing specific project details)
+UNCERTAINTY: 0.6 (moderate uncertainty about requirements)
+
+Reasoning: [explains each score]..."
+```
+
+**That's it!** The skill is loaded for this conversation.
+
+**Pro tip:** After POSTFLIGHT, save epistemic handoffs to Claude's memory for cross-session continuity (see Memory Integration section below).
+
+---
+
+### Option 2: Integrate with System Prompt (Advanced)
+
+For users who want Empirica available automatically in all Claude sessions:
+
+**Step 1: Locate your system prompt**
+- Find your `CLAUDE.md` or system prompt file
+- This is typically in your project root or `.claude/` directory
+
+**Step 2: Add Empirica section**
+- Open `EMPIRICA_SYSTEM_PROMPT_INTEGRATION.md` in this package
+- Copy the "System Prompt Template" section
+- Add it to your CLAUDE.md
+
+**Step 3: Use across all sessions**
+- Every Claude instance now has epistemic framework
+- Works with Claude Chat, Claude Code, API, etc.
+- Consistent across conversations
+
+See `EMPIRICA_SYSTEM_PROMPT_INTEGRATION.md` for full integration guide.
+
+---
+
+### Option 3: Full Empirica Foundation (CLI/IDE)
+
+For advanced features like automated checkpoints, MCP integration, and multi-agent coordination:
+
+```bash
+pip install empirica-foundation
+empirica bootstrap --ai-id your-name
+```
+
+See the main Empirica Foundation repository for CLI features.
+
+**When to upgrade to CLI:**
+- You need automated checkpoint management
+- You're using API (not chat) and want token efficiency
+- You need multi-agent coordination  
+- You want git-based provenance tracking
+
+**Most users don't need the CLI** - memory integration in chat is enough!
 
 ## What Empirica Does
 

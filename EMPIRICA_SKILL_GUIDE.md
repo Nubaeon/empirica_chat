@@ -28,13 +28,33 @@ Empirica is **substrate-agnostic**:
 
 ### 1. Load the Skill
 
-When you start a new conversation where you want epistemic tracking, mention:
+**Step-by-step:**
+
+1. **Download the skill file:**
+   - Get `empirica-epistemic-framework.skill` from the repository
+   - It's a .skill file (zip archive with SKILL.md + references)
+
+2. **Open Claude chat:**
+   - Go to [claude.ai](https://claude.ai)
+   - Start a new conversation
+
+3. **Upload the skill:**
+   - Click the attachment button (paperclip icon)
+   - Select `empirica-epistemic-framework.skill`
+   - Claude recognizes .skill files automatically
+
+4. **Skill is loaded:**
+   - Claude now has Empirica framework available
+   - You can start using CASCADE workflow immediately
+
+**Alternative: Verbal activation**
+If the skill is already uploaded or integrated into your system prompt:
 ```
-I'm loading the Empirica epistemic framework skill. 
-I want to use it for systematic self-assessment during this task.
+"I'm using the Empirica epistemic framework for this task. 
+Let's start with PREFLIGHT."
 ```
 
-Claude will load this skill automatically for conversations where epistemic transparency matters.
+Claude will activate the CASCADE workflow.
 
 ### 2. Use the CASCADE Workflow
 
@@ -334,6 +354,60 @@ Token savings: ~7,500 tokens (94% reduction)
 - Git provenance tracking
 
 **Most users need memory, not CLI.**
+
+---
+
+## Troubleshooting Installation
+
+### "Claude doesn't recognize the skill file"
+
+**Solution:**
+- Ensure the file is named `empirica-epistemic-framework.skill` (not .zip)
+- .skill files are zip archives - don't extract them
+- Upload directly to Claude chat via attachment button
+- If still issues, try renaming to .zip, then back to .skill
+
+### "The skill doesn't seem to activate"
+
+**Solution:**
+- After uploading, explicitly say: "Use Empirica for this task. Start with PREFLIGHT."
+- Claude needs a prompt to activate the skill in conversation
+- The skill is loaded, but you need to invoke it
+
+### "I uploaded it but Claude forgot"
+
+**Solution:**
+- Skills are conversation-specific in Claude chat
+- Need to re-upload in each new conversation
+- OR: Integrate with system prompt for persistence (see SYSTEM_PROMPT_INTEGRATION.md)
+- OR: Use memory integration to save epistemic handoffs across sessions
+
+### "How do I know it's working?"
+
+**Signs the skill is active:**
+- Claude uses CASCADE terminology (PREFLIGHT, CHECK, POSTFLIGHT)
+- Provides epistemic vector scores (KNOW, DO, CONTEXT, UNCERTAINTY)
+- Gives reasoning for each score
+- Compares PREFLIGHT → POSTFLIGHT
+
+### "Can I use this in Claude Code/API/other interfaces?"
+
+**Yes:**
+- **Claude Chat:** Upload skill file directly
+- **Claude Code:** Add to system prompt (see SYSTEM_PROMPT_INTEGRATION.md)
+- **API:** Include skill content in system prompt
+- **Other AI systems:** Use SKILL.md as system instruction
+
+### "Do I need to install anything?"
+
+**No for chat usage:**
+- Just download and upload the .skill file
+- Zero installation required
+- Works immediately
+
+**Yes for CLI features:**
+- For automation, checkpoints, MCP: `pip install empirica-foundation`
+- Most users don't need this
 
 ---
 
