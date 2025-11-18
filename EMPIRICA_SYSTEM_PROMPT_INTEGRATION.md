@@ -125,7 +125,7 @@ Lead AI (Design):
 - INVESTIGATE: Requirements analysis
 - CHECK: Ready to design?
 - ACT: Create architecture docs
-- POSTFLIGHT: Generate handoff report (98.8% compression!)
+- POSTFLIGHT: Generate handoff report (98% compression!)
 
 [Handoff to Implementation AI]
 
@@ -485,7 +485,7 @@ Track calibration delta:
 
 1. **Download skill**: `empirica-epistemic-framework.skill`
 2. **Load in Claude**: Use skill for next complex task
-3. **Try CASCADE**: PREFLIGHT → ACT → POSTFLIGHT
+3. **Try CASCADE**: PREFLIGHT → INVESTIGATE → CHECK → ACT → POSTFLIGHT
 4. **Review calibration**: Did initial assessment match outcome?
 5. **Iterate**: Each task improves your calibration over time
 
